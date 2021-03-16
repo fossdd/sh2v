@@ -18,6 +18,12 @@ fn translate(sh []string) []string {
 			vsh << "chmod('${args[2]}', ${args[1]})"
 			continue
 		}
+		if line.strip_margin().starts_with('echo') {
+			args := line.strip_margin().split(' ')
+			print := args[1..].join(' ')
+			vsh << "println('${print}')"
+			continue
+		}
 		vsh << "system('$line')"
 	}
 	return vsh
