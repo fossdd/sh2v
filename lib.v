@@ -13,6 +13,11 @@ fn translate(sh []string) []string {
 			vsh << ''
 			continue
 		}
+		if line.strip_margin().starts_with('chmod') {
+			args := line.strip_margin().split(' ')
+			vsh << "chmod('${args[2]}', ${args[1]})"
+			continue
+		}
 		vsh << "system('$line')"
 	}
 	return vsh
